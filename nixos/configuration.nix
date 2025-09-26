@@ -340,10 +340,11 @@ in {
     autorandr
 
     # Microcontrollers:
-    mpremote
-    esptool # ?
-    picocom # ?
-    minicom # ?
+    mpremote # (MicroPython REPL + file push)
+    esptool # (ESP flashing)
+    picocom # (serial monitor)
+    avrdude # (Arduino flashing)
+    picotool # (Pico UF2 loading)
 
     # Coding resources:
     python3
