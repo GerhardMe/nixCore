@@ -66,10 +66,10 @@ if status is-interactive
     # ----------------------------------------------------------------
     # -------------------- Functions for idiots ----------------------
     # ----------------------------------------------------------------
-    
+
     function month
         set -l cur (date +%m)
-    
+
         printf "\e[38;5;27m01 January (31)";   test "$cur" = "01"; and printf " <--"; printf "\e[0m\n"
         printf "\e[38;5;27m02 February (28/29)"; test "$cur" = "02"; and printf " <--"; printf "\e[0m\n"
         printf "\e[38;5;40m03 March (31)";     test "$cur" = "03"; and printf " <--"; printf "\e[0m\n"
@@ -87,6 +87,10 @@ if status is-interactive
     # ----------------------------------------------------------------
     # ----------------------------- Aliases --------------------------
     # ----------------------------------------------------------------
+
+    function dev
+        nix develop --command fish $argv
+    end
 
     # Reconfigure
     alias reload='reconfigure reload'

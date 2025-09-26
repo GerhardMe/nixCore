@@ -119,6 +119,8 @@
     freecad
     qbittorrent
     protonvpn-gui
+    krita
+    gimp
 
     # Games:
     prismlauncher # open source minecraft launcher

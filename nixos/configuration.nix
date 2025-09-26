@@ -408,6 +408,7 @@ in {
     mpv # the best video player
     bat # cat but with colors
     bat-extras.core # Batman!
+    ffmpeg-full
 
     # MAN PAGES:
     man-pages

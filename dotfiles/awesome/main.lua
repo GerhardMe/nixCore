@@ -61,6 +61,13 @@ awful.spawn.easy_async_with_shell([[sh -c 'nvidia-smi -L >/dev/null 2>&1 && echo
 	awesome.emit_signal("env::egpu_ready", HAS_EGPU)
 end)
 
+local last_primary, last_laptop
+
+-- Restart awesome when screens are added/removed
+screen.connect_signal("list", function()
+	awesome.restart()
+end)
+
 ------------------------------------------------------------------------------------------------------------
 ------------------------------------------------- ERROR HANDLING -------------------------------------------
 ------------------------------------------------------------------------------------------------------------
