@@ -12,7 +12,7 @@ fi
 UPTIME=$(awk '{print int($1)}' /proc/uptime)
 
 # if system older than 50s, then exit
-if (( UPTIME < 50 )); then
+if ((UPTIME < 50)); then
   exit 0
 fi
 
@@ -46,7 +46,6 @@ magick -size 600x600 xc:none \
   "$OVER"
 
 if ! magick identify -format '%[channels]' "$OVER" >/dev/null 2>&1; then
-  dunstify -u critical "Failed to render glyph from $FONTFILE"
   exit 1
 fi
 

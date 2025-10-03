@@ -345,6 +345,7 @@ in {
     picocom # (serial monitor)
     avrdude # (Arduino flashing)
     picotool # (Pico UF2 loading)
+    arduino-cli # compiler for arduino
 
     # Coding resources:
     python3
