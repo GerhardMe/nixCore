@@ -125,7 +125,6 @@ main() {
 
   if [ -z "$PORT" ]; then
     log "no usable serial device"
-    notify "🔌 No serial device" "Nothing detected (or all ignored)."
     rm -f "$STATE_FILE" # prevent mcflash from using stale info
     exit 0
   fi
@@ -155,7 +154,6 @@ main() {
   ESP) notify "⚙️ ESP" "Use: mcflash firmware.bin" ;;
   PICO) notify "🐣 Pico" "Use: mcflash firmware.uf2" ;;
   ARDUINO) notify "🔧 Arduino" "Use: mcflash sketch.hex" ;;
-  GENERIC) notify "🧩 Serial" "Use: mcflash (unknown type)" ;;
   esac
 
   open_terminal "$PORT" "$DEFAULT_BAUD"
