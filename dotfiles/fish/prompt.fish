@@ -7,30 +7,43 @@ function fish_prompt
         set last_dir (string split "/" $raw_dir)[-1]
     end
 
+    # 1) SSH prompt (highest precedence)
     if set -q SSH_CONNECTION
-        # SSH mode: big red banner + host + server IP
         set host (hostname)
-        set parts (string split ' ' -- $SSH_CONNECTION)  # client_ip client_port server_ip server_port
+        set parts (string split ' ' -- $SSH_CONNECTION)   # client_ip client_port server_ip server_port
         set server_ip $parts[3]
-
-
-
-        # Directory + prompt in high-contrast colors
-        printf '\033[38;5;208m[\033[0m'
-        printf '\033[38;5;220m%s\033[0m' $host
-        printf '\033[38;5;196m@\033[0m'
-        printf '\033[38;5;220m%s\033[0m' $server_ip
-        printf '\033[38;5;208m/\033[0m'
-        printf '\033[38;5;220m%s\033[0m' $last_dir
-        printf '\033[38;5;208m]\033[0m'
-        printf '\033[38;5;220m❯ \033[0m'
-    else
-        # Your original local prompt
-        printf '\033[38;5;93m[\033[0m'
-        printf '\033[38;5;14m%s\033[0m' $last_dir
-        printf '\033[38;5;93m]\033[0m'
-        printf '\033[38;5;14m❯ \033[0m'
+        printf '\033[38;5;208m[\033[0m'                  # [
+        printf '\033[38;5;220m%s\033[0m' $host           # hostname
+        printf '\033[38;5;196m@\033[0m'                  # @
+        printf '\033[38;5;220m%s\033[0m' $server_ip      # server ip
+        printf '\033[38;5;208m/\033[0m'                  # /
+        printf '\033[38;5;220m%s\033[0m' $last_dir       # dir
+        printf '\033[38;5;208m]\033[0m'                  # ]
+        printf '\033[38;5;220m❯ \033[0m'                 # prompt
+        return
     end
+
+    # 2) Nix dev-shell prompt (when launched via `nix develop -c fish` or your `dev` function)
+    if test -n "$IN_NIX_SHELL"
+        # optional: show pure/impure
+        set mode (string lower -- $IN_NIX_SHELL)
+        if test -z "$mode"
+            set mode "dev"
+        end
+        printf '\033[38;5;112m[\033[0m'                  # [
+        printf '\033[38;5;39m%s\033[0m' "nix:$mode"      # nix:mode
+        printf '\033[38;5;112m/\033[0m'                  # /
+        printf '\033[38;5;39m%s\033[0m' $last_dir        # dir
+        printf '\033[38;5;112m]\033[0m'                  # ]
+        printf '\033[38;5;39m❯ \033[0m'                  # prompt
+        return
+    end
+
+    # 3) Local default prompt
+    printf '\033[38;5;93m[\033[0m'
+    printf '\033[38;5;14m%s\033[0m' $last_dir
+    printf '\033[38;5;93m]\033[0m'
+    printf '\033[38;5;14m❯ \033[0m'
 end
 
 # OLD PROMT:
