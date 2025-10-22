@@ -25,17 +25,13 @@ function fish_prompt
 
     # 2) Nix dev-shell prompt (when launched via `nix develop -c fish` or your `dev` function)
     if test -n "$IN_NIX_SHELL"
-        # optional: show pure/impure
-        set mode (string lower -- $IN_NIX_SHELL)
-        if test -z "$mode"
-            set mode "dev"
-        end
-        printf '\033[38;5;112m[\033[0m'                  # [
-        printf '\033[38;5;39m%s\033[0m' "nix:$mode"      # nix:mode
-        printf '\033[38;5;112m/\033[0m'                  # /
-        printf '\033[38;5;39m%s\033[0m' $last_dir        # dir
-        printf '\033[38;5;112m]\033[0m'                  # ]
-        printf '\033[38;5;39m❯ \033[0m'                  # prompt
+        printf '\033[38;5;14m[\033[0m'
+        printf '\033[38;5;10mdev\033[0m'
+        printf '\033[38;5;14m/\033[0m'
+        printf '\033[38;5;10m%s\033[0m' $last_dir      
+        printf '\033[38;5;14m]\033[0m'                 
+        printf '\033[38;5;10m❯ \033[0m'                
+        # [dev/tet]❯
         return
     end
 
