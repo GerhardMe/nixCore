@@ -121,6 +121,8 @@
     protonvpn-gui
     krita
     gimp
+    texstudio
+    texliveFull
 
     # Games:
     prismlauncher # open source minecraft launcher

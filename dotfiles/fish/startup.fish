@@ -28,6 +28,12 @@ if status is-interactive
             case p
                 command git push
 
+            case a
+                set -l ts (date '+%Y-%m-%d %H:%M:%S')
+                command git add .
+                command git commit -m "lts: $ts"
+                command git push
+
             case '*'
                 # any other git command, just pass through
                 command git $argv

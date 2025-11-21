@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
-exec >> /tmp/battery_debug.log 2>&1
+exec >>/tmp/battery_debug.log 2>&1
 echo "Battery monitor started at $(date)"
 
 THRESHOLD=4
 BATTERY_PATH="/sys/class/power_supply/BAT0/capacity"
 STATUS_PATH="/sys/class/power_supply/BAT0/status"
 POPUP_EXEC="$HOME/nixCore/batNotify/battery_popup.run"
-INTERVAL=61  # seconds between checks
+INTERVAL=61 # seconds between checks
 STATE_FILE="/tmp/battery_warning_shown"
 
 while true; do
