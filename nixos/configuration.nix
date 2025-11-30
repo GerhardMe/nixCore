@@ -334,6 +334,7 @@ in {
 
     # Backupp browser:
     chromium
+    google-chrome
 
     # Multi monitor support:
     arandr

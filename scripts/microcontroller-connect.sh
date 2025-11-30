@@ -3,7 +3,8 @@ set -Eeuo pipefail
 
 # ===================== simple config =====================
 IGNORE_PORTS=${IGNORE_PORTS:-"/dev/ttyACM0"}
-IGNORE_VIDS=${IGNORE_VIDS:-"2cb7"} # Fibocom default
+# Ignore Fibocom (2cb7) + Nordic nRF DK (1915)
+IGNORE_VIDS=${IGNORE_VIDS:-"2cb7 1915"}
 DEFAULT_BAUD=${DEFAULT_BAUD:-115200}
 STATE_FILE="/tmp/mcdev"
 # =========================================================

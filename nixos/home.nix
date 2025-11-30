@@ -123,6 +123,7 @@
     gimp
     texstudio
     texliveFull
+    inkscape
 
     # Games:
     prismlauncher # open source minecraft launcher
