@@ -19,7 +19,7 @@ handle_monitor() {
 }
 
 handle_sleep() {
-  "$HOME"/GNOM/scripts/blurlock.sh || true
+  "$HOME"/GNOMS/scripts/blurlock.sh || true
 }
 
 inotifywait -mq -e create /tmp | while read -r _ _ file; do
@@ -28,7 +28,7 @@ inotifywait -mq -e create /tmp | while read -r _ _ file; do
   monitor) handle_monitor ;;
   sleep) handle_sleep ;;
   usb)
-    "$HOME/GNOM/scripts/microcontroller-connect.sh" &
+    "$HOME/GNOMS/scripts/microcontroller-connect.sh" &
     ;;
   esac
 done

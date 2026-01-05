@@ -93,10 +93,10 @@ restart_repl() {
   local script=""
   if command -v microcontroller-connect.sh >/dev/null 2>&1; then
     script="$(command -v microcontroller-connect.sh)"
-  elif [[ -x "$HOME/GNOM/scripts/microcontroller-connect.sh" ]]; then
-    script="$HOME/GNOM/scripts/microcontroller-connect.sh"
+  elif [[ -x "$HOME/GNOMS/scripts/microcontroller-connect.sh" ]]; then
+    script="$HOME/GNOMS/scripts/microcontroller-connect.sh"
   else
-    die "microcontroller-connect.sh not found (checked PATH and ~/GNOM/scripts/)"
+    die "microcontroller-connect.sh not found (checked PATH and ~/GNOMS/scripts/)"
   fi
 
   log "[post] launching $script ${newport:+--port $newport}"

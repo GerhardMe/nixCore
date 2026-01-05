@@ -8,13 +8,13 @@ RED="\033[1;31m"
 RESET="\033[0m"
 
 # -------------------- Paths --------------------
-REPO_DIR="$HOME/GNOM/nixos"
+REPO_DIR="$HOME/GNOMS/nixos"
 TARGET_DIR="/etc/nixos"
-COREDOT="$HOME/GNOM/dotfiles"
+COREDOT="$HOME/GNOMS/dotfiles"
 DOT="$HOME/.config"
-CORESCR="$HOME/GNOM/scripts"
+CORESCR="$HOME/GNOMS/scripts"
 EXE="$HOME/.local/bin"
-PROFILE="$HOME/GNOM/personal/profile.conf"
+PROFILE="$HOME/GNOMS/personal/profile.conf"
 
 # --------------- Profile parser -----------------
 declare -A CONFIG

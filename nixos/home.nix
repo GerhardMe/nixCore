@@ -38,7 +38,7 @@
     };
     Service = {
       Type = "oneshot";
-      ExecStart = "%h/GNOM/scripts/hardware-events.sh";
+      ExecStart = "%h/GNOMS/scripts/hardware-events.sh";
       Restart = "on-failure";
       RestartSec = 10;
       Environment = "PATH=/run/current-system/sw/bin";
@@ -73,7 +73,7 @@
     };
     Service = {
       Type = "simple";
-      ExecStart = "%h/GNOM/scripts/ssh-detect.sh";
+      ExecStart = "%h/GNOMS/scripts/ssh-detect.sh";
       Restart = "always";
       RestartSec = 1;
       Environment = [

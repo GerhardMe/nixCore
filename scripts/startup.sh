@@ -5,11 +5,11 @@ exec >>/tmp/startup_debug.log 2>&1
 echo "Startup script started at $(date)"
 
 # Select mode
-$HOME/GNOM/scripts/mode-set.sh &
+$HOME/GNOMS/scripts/mode-set.sh &
 
 # Start battery monitor
 rm /tmp/battery_warning_shown
-$HOME/GNOM/scripts/battery-monitor.sh &
+$HOME/GNOMS/scripts/battery-monitor.sh &
 echo "Started battery waring script"
 
 # Cursor hider
@@ -17,7 +17,7 @@ unclutter -idle 1 -jitter 2 -root &
 echo "Started unclutter"
 
 # Set up screenlock
-LOCK="$HOME/GNOM/scripts/blurlock.sh"
+LOCK="$HOME/GNOMS/scripts/blurlock.sh"
 xidlehook --not-when-audio --not-when-fullscreen --timer 400 "$LOCK" '' &
 xidlehook --not-when-fullscreen --timer 801 "$LOCK" '' &
 echo "Started idle screen lock"

@@ -404,7 +404,7 @@ globalkeys =
 		{modkey},
 		"x",
 		function()
-			awful.spawn(home .. "/GNOM/scripts/blurlock.sh")
+			awful.spawn(home .. "/GNOMS/scripts/blurlock.sh")
 		end,
 		{description = "lock computer", group = "layout"}
 	),
@@ -415,7 +415,7 @@ globalkeys =
 		{},
 		"XF86AudioRaiseVolume",
 		function()
-			awful.spawn(home .. "/GNOM/scripts/volume.sh up")
+			awful.spawn(home .. "/GNOMS/scripts/volume.sh up")
 		end,
 		{description = "volume up", group = "media"}
 	),
@@ -423,7 +423,7 @@ globalkeys =
 		{},
 		"XF86AudioLowerVolume",
 		function()
-			awful.spawn(home .. "/GNOM/scripts/volume.sh down")
+			awful.spawn(home .. "/GNOMS/scripts/volume.sh down")
 		end,
 		{description = "volume down", group = "media"}
 	),
@@ -432,7 +432,7 @@ globalkeys =
 		{},
 		"XF86AudioMute",
 		function()
-			awful.spawn(home .. "/GNOM/scripts/volume.sh mute")
+			awful.spawn(home .. "/GNOMS/scripts/volume.sh mute")
 		end,
 		{description = "toggle mute", group = "media"}
 	),
@@ -452,7 +452,7 @@ globalkeys =
 		{},
 		"XF86MonBrightnessUp",
 		function()
-			awful.spawn(home .. "/GNOM/scripts/brightstep.sh up")
+			awful.spawn(home .. "/GNOMS/scripts/brightstep.sh up")
 		end,
 		{description = "brightness up", group = "system"}
 	),
@@ -460,7 +460,7 @@ globalkeys =
 		{},
 		"XF86MonBrightnessDown",
 		function()
-			awful.spawn(home .. "/GNOM/scripts/brightstep.sh down")
+			awful.spawn(home .. "/GNOMS/scripts/brightstep.sh down")
 		end,
 		{description = "brightness down", group = "system"}
 	),
@@ -1049,7 +1049,7 @@ gears.timer.delayed_call(
 		end
 
 		-- startup programs
-		awful.spawn.with_shell(home .. "/GNOM/scripts/startup.sh")
+		awful.spawn.with_shell(home .. "/GNOMS/scripts/startup.sh")
 
 		-- reload TAGs
 		gears.timer(
