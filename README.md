@@ -19,7 +19,7 @@
                      ▜████▛                   Memory: can't afford
                       ▜██▛                    
                        ▜▛                     . ݁₊ ⊹ . ݁ ⟡ ݁ . ⊹ ₊ ݁.
-A NixOS flake-based manager for dotfiles, scripts, configurations and more!  
+A flake-based NixOS manager for dotfiles, scripts, configurations and more!  
 
 ## Architecture
 
