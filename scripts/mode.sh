@@ -2,8 +2,8 @@
 set -euo pipefail
 
 STATE_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/mode/state"
-APPLIER="$HOME/GNOMS/scripts/mode-set.sh"
-PERF="$HOME/GNOMS/scripts/performance.sh"
+APPLIER="$HOME/GNOM/scripts/mode-set.sh"
+PERF="$HOME/GNOM/scripts/performance.sh"
 
 usage() {
   echo "Usage: mode {server|normal|performance|status}"

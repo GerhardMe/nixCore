@@ -1,6 +1,6 @@
-# Gerhard's NixOS Manager System (GNOMS)
+# Gerhard's NixOS Manager (GNOM)
     [~]❯ neofetch
-                       ▐▌                     gg@gnoms
+                       ▐▌                     gg@gnom
                        ██                     ------
                       ▟██▙                    OS: NixOS
                      ▟████▙                   Host: ThinkPad T480
@@ -49,8 +49,8 @@ One script to rule them all:
 
 To install this config on any NixOS system:
 ```bash
-git clone https://github.com/GerhardMe/GNOMS ~/GNOMS
-cd ~/GNOMS/scripts
+git clone https://github.com/GerhardMe/GNOM ~/GNOM
+cd ~/GNOM/scripts
 ./reconfigure.sh rebuild
 ```
 
