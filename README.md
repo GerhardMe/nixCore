@@ -1,6 +1,6 @@
 # Gerhard's NixOS Manager System (GNOMS)
     [~]❯ neofetch
-                       ▐▌                     Gerhard@NixOS
+                       ▐▌                     Gerhard@GNOMS
                        ██                     ------
                       ▟██▙                    OS: NixOS
                      ▟████▙                   Host: ThinkPad T480
