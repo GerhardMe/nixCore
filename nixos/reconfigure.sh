@@ -1,0 +1,220 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# -------------------- Colors --------------------
+GREEN="\033[1;32m"
+PURPLE="\033[38;2;135;0;255m"
+RED="\033[1;31m"
+RESET="\033[0m"
+
+# -------------------- Paths --------------------
+REPO_DIR="$HOME/GNOMS/nixos"
+TARGET_DIR="/etc/nixos"
+COREDOT="$HOME/GNOMS/dotfiles"
+DOT="$HOME/.config"
+CORESCR="$HOME/GNOMS/scripts"
+EXE="$HOME/.local/bin"
+PROFILE="$HOME/GNOMS/personal/profile.conf"
+
+# --------------- Profile parser -----------------
+declare -A CONFIG
+
+parse_config() {
+    local in_block=""
+    local block_content=""
+
+    while IFS= read -r line || [[ -n "$line" ]]; do
+        # Skip comments and empty lines
+        [[ "$line" =~ ^[[:space:]]*# ]] && continue
+        [[ -z "${line// /}" ]] && continue
+
+        # Check for block end first (when inside a block)
+        if [[ -n "$in_block" ]] && [[ "$line" =~ ^[[:space:]]*\}[[:space:]]*$ ]]; then
+            CONFIG["$in_block"]="$block_content"
+            in_block=""
+            continue
+        fi
+
+        # Inside a block - accumulate content
+        if [[ -n "$in_block" ]]; then
+            local trimmed="${line#"${line%%[![:space:]]*}"}"
+            block_content+="${trimmed}"$'\n'
+            continue
+        fi
+
+        # Check for block start: key = {
+        if [[ "$line" =~ ^([a-z_]+)[[:space:]]*=[[:space:]]*\{[[:space:]]*$ ]]; then
+            in_block="${BASH_REMATCH[1]}"
+            block_content=""
+            continue
+        fi
+
+        # Regular key = value (but not if value is just "{")
+        if [[ "$line" =~ ^([a-z_]+)[[:space:]]*=[[:space:]]*(.+)$ ]]; then
+            local value="${BASH_REMATCH[2]}"
+            [[ "$value" == "{" ]] && continue
+            CONFIG["${BASH_REMATCH[1]}"]="$value"
+        fi
+    done <"$PROFILE"
+}
+
+# Replace all {{key}} patterns in a file using sed
+apply_template() {
+    local input="$1"
+    local output="$2"
+
+    cp "$input" "$output"
+
+    for key in "${!CONFIG[@]}"; do
+        local value="${CONFIG[$key]}"
+        # Escape newlines and special chars for sed
+        value="${value//\\/\\\\}"
+        value="${value//&/\\&}"
+        value="${value//$'\n'/\\n}"
+        sed -i "s|{{${key}}}|${value}|g" "$output"
+    done
+}
+
+# -------------------- Helper functions --------------------
+step() { echo -e "${PURPLE}[  ▶▶  ]${RESET} $1"; }
+success() { echo -e "${GREEN}[  OK  ]${RESET} $1"; }
+error() { echo -e "${RED}[  !!  ]${RESET} $1"; }
+
+copy() {
+    local src="$1" dest="$2"
+    mkdir -p "$(dirname "$dest")"
+    if cp -f "$src" "$dest"; then
+        success "Copied $src → $dest"
+    else
+        error "ERROR: failed to copy $src → $dest" >&2
+    fi
+}
+
+link() {
+    local target="$1" dest="$2"
+    mkdir -p "$(dirname "$dest")"
+    if ln -sf "$target" "$dest"; then
+        success "Linked $dest → $target"
+    else
+        error "ERROR: failed to link $dest → $target" >&2
+    fi
+}
+
+kill_clients_on_workspace() {
+    local tag="$1"
+    awesome-client <<EOF
+for _, c in ipairs(client.get()) do
+  if c.first_tag and c.first_tag.name == "${tag}" then
+    c:kill()
+  end
+end
+EOF
+}
+
+save_visible_tags() {
+    : >/tmp/awesome-visible-tags
+    for screen in $(seq 1 5); do
+        raw_output=$(awesome-client "return (screen[${screen}] and screen[${screen}].selected_tag and screen[${screen}].selected_tag.name) or ''" 2>/dev/null)
+        tag=$(printf "%s" "$raw_output" | sed -n 's/.*"\(.*\)".*/\1/p')
+        tag=$(printf "%s" "$tag" | tr -d '"\n ')
+        if [ -n "$tag" ]; then
+            echo "${screen}:${tag}" >>/tmp/awesome-visible-tags
+        fi
+    done
+}
+
+# -------------------- Operations --------------------
+reload() {
+    step "Copying dotfiles…"
+    copy "$COREDOT/dunst.conf" "$DOT/dunst/dunstrc"
+    copy "$COREDOT/udiskie.yml" "$DOT/udiskie/config.yml"
+    copy "$COREDOT/rofi.rasi" "$DOT/rofi/config.rasi"
+    copy "$COREDOT/fish/prompt.fish" "$DOT/fish/functions/fish_prompt.fish"
+    copy "$COREDOT/fish/prompt_right.fish" "$DOT/fish/functions/fish_right_prompt.fish"
+    copy "$COREDOT/fish/startup.fish" "$DOT/fish/config.fish"
+    copy "$COREDOT/fish/theme.fish" "$DOT/fish/fish_variables"
+    copy "$COREDOT/awesome/main.lua" "$DOT/awesome/rc.lua"
+    copy "$COREDOT/awesome/statusbar.lua" "$DOT/awesome/statusbar.lua"
+    copy "$COREDOT/awesome/theme.lua" "$DOT/awesome/theme.lua"
+    copy "$COREDOT/wezterm.lua" "$DOT/wezterm/wezterm.lua"
+    copy "$COREDOT/cava.conf" "$DOT/cava/config"
+    copy "$COREDOT/nvim/init.lua" "$DOT/nvim/init.lua"
+    copy "$COREDOT/nvim/lua/keymaps.lua" "$DOT/nvim/lua/keymaps.lua"
+    copy "$COREDOT/nvim/lua/options.lua" "$DOT/nvim/lua/options.lua"
+    copy "$COREDOT/nvim/lua/plugins.lua" "$DOT/nvim/lua/plugins.lua"
+    copy "$COREDOT/nvim/lua/theme.lua" "$DOT/nvim/lua/theme.lua"
+    copy "$COREDOT/nvim/lua/autocmd.lua" "$DOT/nvim/lua/autocmd.lua"
+    copy "$COREDOT/qbittorrent.conf" "$DOT/qBittorrent/qBittorrent.conf"
+    copy "$COREDOT/fastfetch.jsonc" "$DOT/fastfetch/config.jsonc"
+
+    step "Creating symlinks for scripts…"
+    link "$REPO_DIR/reconfigure.sh" "$EXE/reconfigure"
+    link "$CORESCR/microcontroller-flash.sh" "$EXE/mcflash"
+    link "$CORESCR/mode.sh" "$EXE/mode"
+    link "$CORESCR/egpu.sh" "$EXE/egpu"
+    chmod +x "$EXE/"*
+
+    if [ -n "${DISPLAY-}" ] && command -v awesome-client &>/dev/null; then
+        step "Killing programs on hidden workspaces..."
+        kill_clients_on_workspace scrap
+        kill_clients_on_workspace preload
+        success "All programs successfully murdered"
+
+        step "Saving visible tags per screen..."
+        save_visible_tags
+
+        step "Reloading AwesomeWM configuration..."
+        success "\033[1;32mAll done!"
+        awesome-client 'awesome.restart()' >/dev/null 2>&1
+    else
+        error "Not in an X session or awesome-client not found; skipping AwesomeWM reload."
+    fi
+}
+
+rebuild() {
+    step "Parsing local config…"
+    parse_config
+
+    step "Processing and copying flake files into $TARGET_DIR…"
+    for file in flake.nix configuration.nix home.nix; do
+        apply_template "$REPO_DIR/$file" "/tmp/$file"
+        sudo cp -f "/tmp/$file" "$TARGET_DIR/$file"
+        rm "/tmp/$file"
+    done
+
+    # Copy flake.lock directly without templating
+    sudo cp -f "$REPO_DIR/flake.lock" "$TARGET_DIR/flake.lock"
+
+    sudo chown root:root "$TARGET_DIR"/{flake.nix,flake.lock,configuration.nix,home.nix}
+    sudo chmod 644 "$TARGET_DIR"/{flake.nix,flake.lock,configuration.nix,home.nix}
+    success "Flake files templated and updated in $TARGET_DIR"
+
+    step "Building new system configuration…"
+    sudo nixos-rebuild switch --flake "$TARGET_DIR#${CONFIG[hostname]}" 2>&1 | tee >(grep --color error >&2) || false
+    success "System rebuild complete."
+
+    reload
+}
+
+update() {
+    step "Updating flake.lock in $REPO_DIR…"
+    nix flake update --flake "$REPO_DIR"
+    success "Flake.lock updated."
+}
+
+upgrade() {
+    update
+    rebuild
+}
+
+# -------------------- Entry Point --------------------
+case "${1-}" in
+rebuild) rebuild ;;
+reload) reload ;;
+update) update ;;
+upgrade) upgrade ;;
+*)
+    echo -e "${RED}Usage: $0 {rebuild|reload|update|upgrade}${RESET}" >&2
+    exit 1
+    ;;
+esac

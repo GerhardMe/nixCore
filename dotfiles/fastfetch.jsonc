@@ -1,0 +1,35 @@
+{
+    "logo": {
+        "source": "~/GNOMS/personal/logo.txt",
+        "type": "file",
+        "color": {
+            "1": "white"
+        },
+        "padding": {
+            "right": 2
+        }
+    },
+    "display": {
+        "separator": ":"
+    },
+    "modules": [
+        "title",
+        "separator",
+        "os",
+        "host",
+        "kernel",
+        "uptime",
+        "packages",
+        "shell",
+        "display",
+        "de",
+        "wm",
+        "icons",
+        "terminal",
+        "cpu",
+        "gpu",
+        "memory",
+        "break",
+        "colors"
+    ]
+}
