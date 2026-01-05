@@ -18,7 +18,7 @@
                     ▜██████▛                  eGPU: NVIDIA GeForce RTX 2080
                      ▜████▛                   Memory: can't afford
                       ▜██▛                    
-                       ▜▛                     . ݁₊ ⊹ . ݁ ⟡ ݁ . ⊹ ₊ ݁.
+                       ▜▛                     . ݁₊ ⊹ . ݁ ⟡ ݁ . ⊹ ₊ ݁.´
 A flake-based NixOS manager for dotfiles, scripts, configurations and more!  
 
 ## Architecture
