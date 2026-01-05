@@ -16,7 +16,7 @@
     in {
       # NixOS system configuration
       nixosConfigurations = {
-        nix = nixpkgs.lib.nixosSystem {
+        {{hostname}} = nixpkgs.lib.nixosSystem {
           inherit system;
           modules = [
             ./configuration.nix
