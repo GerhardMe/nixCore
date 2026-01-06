@@ -55,4 +55,4 @@ cd ~/GNOMS/scripts
 ```
 That's it!
 
-Want to read more? [Click me!](http://localhost:4321/projects/proj/gnoms)
+(Want to read more? [Click me!](http://localhost:4321/projects/proj/gnoms))
