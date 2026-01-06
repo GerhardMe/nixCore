@@ -53,5 +53,6 @@ git clone https://github.com/GerhardMe/GNOMS ~/GNOMS
 cd ~/GNOMS/scripts
 ./reconfigure.sh rebuild
 ```
-
 That's it!
+
+Want to read more? [Click me!](http://localhost:4321/projects/proj/gnoms)
