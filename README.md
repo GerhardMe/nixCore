@@ -1,4 +1,5 @@
 # Gerhard's NixOS Management System (GNOMS)
+
     [~]❯ neofetch
                        ▐▌                     gg@gnoms
                        ██                     ------
@@ -17,9 +18,10 @@
                    ▜████████▛                 GPU: Intel UHD Graphics
                     ▜██████▛                  eGPU: NVIDIA GeForce RTX 2080
                      ▜████▛                   Memory: can't afford
-                      ▜██▛                    
+                      ▜██▛
                        ▜▛                     . ݁₊ ⊹ . ݁ ⟡ ݁ . ⊹ ₊ ݁.
-A flake-based NixOS manager for dotfiles, scripts, configurations and more!  
+
+A flake-based NixOS manager for dotfiles, scripts, configurations and more!
 
 ## Architecture
 
@@ -48,11 +50,13 @@ One script to rule them all:
 ## Bootstrap Installation
 
 To install this config on any NixOS system:
+
 ```bash
 git clone https://github.com/GerhardMe/GNOMS ~/GNOMS
 cd ~/GNOMS/scripts
 ./reconfigure.sh rebuild
 ```
+
 It's that simple!
 
-(Want to read more? [Click me!](http://localhost:4321/projects/proj/gnoms))
+(Want to read more? [Click me!](https://gerhard.page/projects/proj/gnoms))
