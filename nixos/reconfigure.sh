@@ -197,9 +197,13 @@ rebuild() {
 }
 
 update() {
-    step "Updating flake.lock in $REPO_DIR…"
-    nix flake update --flake "$REPO_DIR"
-    success "Flake.lock updated."
+    step "Updating flake.lock in $TARGET_DIR…"
+    sudo nix flake update --flake "$TARGET_DIR"
+
+    step "Copying updated flake.lock back to $REPO_DIR…"
+    sudo cp -f "$TARGET_DIR/flake.lock" "$REPO_DIR/flake.lock"
+    sudo chown "$USER:users" "$REPO_DIR/flake.lock"
+    success "Flake.lock updated and synced back."
 }
 
 upgrade() {
