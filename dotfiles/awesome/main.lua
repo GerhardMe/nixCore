@@ -519,7 +519,7 @@ globalkeys =
 		{modkey},
 		"c",
 		function()
-			awful.spawn("galculator")
+			awful.spawn("qalculate-gtk")
 		end,
 		{description = "open calculator", group = "launcher"}
 	),
@@ -776,10 +776,11 @@ awful.rules.rules = {
 				".blueman-manager-wrapped",
 				"tor browser",
 				"pavucontrol",
-				"baobab"
+				"baobab",
+				"Qalculate-gtk"
 			},
-			name = {"galculator", "blueman-manager"},
-			role = {"galculator", "blueman-manager"}
+			name = {"blueman-manager"},
+			role = {"blueman-manager"}
 		},
 		properties = {
 			floating = true,

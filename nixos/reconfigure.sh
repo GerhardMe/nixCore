@@ -132,7 +132,7 @@ reload() {
     copy "$COREDOT/fish/prompt.fish" "$DOT/fish/functions/fish_prompt.fish"
     copy "$COREDOT/fish/prompt_right.fish" "$DOT/fish/functions/fish_right_prompt.fish"
     copy "$COREDOT/fish/startup.fish" "$DOT/fish/config.fish"
-    copy "$COREDOT/fish/theme.fish" "$DOT/fish/fish_variables"
+    copy "$COREDOT/fish/theme.fish" "$DOT/fish/conf.d/fish_frozen_theme.fish"
     copy "$COREDOT/awesome/main.lua" "$DOT/awesome/rc.lua"
     copy "$COREDOT/awesome/statusbar.lua" "$DOT/awesome/statusbar.lua"
     copy "$COREDOT/awesome/theme.lua" "$DOT/awesome/theme.lua"

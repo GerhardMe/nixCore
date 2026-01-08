@@ -136,8 +136,10 @@
 
   programs.git = {
     enable = true;
-    userName = "{{github_name}}";
-    userEmail = "{{github_email}}";
+    settings.user = {
+      name = "{{github_name}}";
+      email = "{{github_email}}";
+    };
   };
 
   # ------------------------------------------------------------------------------------------

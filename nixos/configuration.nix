@@ -262,6 +262,14 @@ in {
   # ---------------------------------------- NIX SPESIFIC ------------------------------------
   # ------------------------------------------------------------------------------------------
 
+  # Fix to get bin/bash to work, not strictly nessesary.
+  system.activationScripts.binbash = {
+  text = ''
+    mkdir -p /bin
+    ln -sf ${pkgs.bash}/bin/bash /bin/bash
+  '';
+};
+
   # Nix garbage collection (monthly, keep only last 30 days)
   nix = {
     settings = {
@@ -352,7 +360,7 @@ in {
     poetry
 
     # Code formatters
-    nixfmt-classic # Nix formatter
+    nixfmt # Nix formatter
     stylua
     black
     shfmt
@@ -367,7 +375,7 @@ in {
     polkit_gnome # GUI for user auth
     networkmanagerapplet # nm-applet nm-connection-editor
     brightnessctl # Backlight brightness support
-    galculator # Calculator
+    qalculate-gtk # Calculator
     udiskie # USB automout applet
     baobab # disk analyser tool
     speedtest-cli # network speed test
@@ -437,7 +445,7 @@ in {
 
   programs.thunar.enable = true;
   programs.xfconf.enable = true;
-  programs.thunar.plugins = with pkgs.xfce; [
+  programs.thunar.plugins = with pkgs; [
     thunar-archive-plugin
     thunar-volman
   ];
@@ -453,7 +461,8 @@ in {
     jetbrains-mono # system font
     noto-fonts
     noto-fonts-cjk-sans
-    noto-fonts-emoji
+    noto-fonts-color-emoji
+    noto-fonts-monochrome-emoji
     liberation_ttf
     fira-code
     fira-code-symbols
